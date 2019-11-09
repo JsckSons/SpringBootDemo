@@ -1,0 +1,50 @@
+<html>
+	<head>
+        <script src="../../static/js/vue.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible">
+
+	</head>
+	<body>
+        <div id="app">
+            <counter></counter>
+            <counter></counter> <counter></counter>
+
+        </div>
+        <template id='temp1'>
+            <div>
+                <input type="button" value="+1" @click="add"/>
+                <h3>{{count}}</h3>
+            </div>
+        </template>
+
+		<script>
+            //var dataObj = {count:0}
+            Vue.component('counter',{
+                template:'#temp1',
+                data:function(){
+                   // return  dataObj
+                    return{
+                        count:0
+                    }
+                },
+                methods:{
+                    add:function(){
+                        this.count++
+                    }
+                }
+            })
+
+            var vm = new Vue({
+                el:'#app',
+                data:{
+                    
+                },
+                methods:{
+                    
+                }
+
+            })
+		</script>
+	</body>
+</html>

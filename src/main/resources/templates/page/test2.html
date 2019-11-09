@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<script src="../../static/js/vue.js"></script>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<!-- 事件冒泡
+			@click.stop
+			@click.prevent
+			@click.self 实现触发当前元素的事件，只会阻止自己身上的行为的触发，并不会阻止别的元素
+			@click.capture
+			@click.once 阻止一次
+		
+		 -->
+		<div id="app">
+            <h4 >{{msg | msgFrmat('疯狂') | test}}</h4>
+            <h1 v-color="'red'">{{date | dateFormat}}</h1>
+            <div v-fontweight="500">
+
+                test
+            </div>
+
+		</div>
+		<script>
+            Vue.filter('msgFrmat',function(msg,arg){
+                return msg.replace(/单纯/g,arg)
+            });
+
+            Vue.filter('test',function(msg){
+                return msg+">>>>>"
+            });
+
+            Vue.filter('dateFormat',function(date){
+                var dt = new Date(date);
+                var y = dt.getFullYear();
+                var M = dt.getMonth();
+                var d = dt.getDay();
+                return y+"-"+M+"-"+d;
+            });
+
+           Vue.directive('focus',{
+               bind: function(el){//每当指令绑定到元素的时候，会立即执行这个bind
+               //在元素刚绑定指令的时候还没有插入到dom中去，这时候调用focus方法没有作用
+                    el.focus();//在每个函数中，第一个参数永远是el，表示被绑定指令的那个元素，原生的js对象
+               },
+               inserted:function(){
+                //元素插入到dom中时，会执行inserted方法
+
+               },
+               updated:function(){
+
+               }
+           })
+           Vue.directive('color',{
+               bind:function(el,binding){
+                    el.style.color = binding.value
+               }
+           })
+
+			var vm = new Vue({
+				el:'#app',
+				data:{
+					msg:'曾今，我也是一个单纯的少年，每天都是单纯的想法' ,
+                    date:'20190203'
+				},
+				methods:{
+					
+				},
+                directives:{
+                    'fontweight':{
+                        bind: function(el,binding){
+                            el.style.fontweight = binding.value;
+                        }
+                    }
+                }
+			});
+		
+		</script>
+	</body>
+</html>
